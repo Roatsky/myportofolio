@@ -15,7 +15,7 @@ import os
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "muhammad-naufal523-myportofolio.pws.cs.ui.ac.id"]
 PRODUCTION = os.getenv('PRODUCTION', 'False').lower() == 'true'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -60,7 +60,7 @@ ROOT_URLCONF = 'myportofolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,6 +72,8 @@ TEMPLATES = [
     },
 ]
 
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 WSGI_APPLICATION = 'myportofolio.wsgi.application'
 
 
