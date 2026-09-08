@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Naufal Syarifuddin - Portfolio</title>
+    <title>{{ name }} - Portofolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -12,9 +12,10 @@
 <body class="colour">
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Muhammad Naufal Syarifuddin</a>
+            <a href="#profile" class="brand">{{ name }}</a>
             <nav>
-                <a href="#profile">Profile</a>
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
             </nav>
         </div>
     </header>
@@ -24,22 +25,22 @@
             <div class="container hero-grid">
                 <div class="hero-identity">
                     <p class="hero-kicker">Information System &middot; Universitas Indonesia</p>
-                    <h1>Muhammad Naufal Syarifuddin</h1>
+                    <h1>{{ name }}</h1>
                 </div>
                 <div class="hero-photo">
                     <div class="photo-block"></div>
-                    <img class="avatar" src="\static\img\Naufal.jpeg" alt="Photo of Muhammad Naufal Syarifuddin">
+                    <img class="avatar" src="/static/img/Naufal.jpeg" alt="Photo of {{ name }}">
                 </div>
                 <div class="hero-details">
-                    <p class="bio">CS student at Universitas Indonesia on his 3rd semester, yet the will and determination for CS & IS course still as strong as in the 1st semester.</p>
+                    <p class="bio">{{ bio }}</p>
                     <dl class="meta-list">
                         <div class="meta-row">
                             <dt>NPM</dt>
-                            <dd>2506602896</dd>
+                            <dd>{{ npm }}</dd>
                         </div>
                         <div class="meta-row">
                             <dt>Program</dt>
-                            <dd>S1 Information System</dd>
+                            <dd>{{ study_program }}</dd>
                         </div>
                     </dl>
                     <div class="social-links">
@@ -50,69 +51,11 @@
                 </div>
             </div>
         </section>
-        <h1 class="title-section">Education</h1>
-        <section class="featured">
-            <div class="data">
-                <ol>
-                    <li >SMP Labschool Jakarta (2019-2022)</li>
-                        <img class="logo" src="\static\img\Labschool.png" alt="Logo of SMP Labschool Jakarta">
-                    <li >SMA Labschool Jakarta (2022-2025)</li>
-                        <img class="logo" src="\static\img\Labschool.png" alt="Logo of SMA Labschool Jakarta">
-                    <li >Computer Science UI (2025-)</li>
-                        <img class="logo" src="\static\img\Fasilkom.png" alt="Logo of Computer Science UI">
-                </ol>
-            </div>
-        </section>
-        <h1 class="title-section">Skills</h1>
-        <section class="featured">
-            <div>
-                <dl>
-                    <div>
-                        <h2>Hard Skill</h2>
-                        <div class="data">
-                            <li><dt>Programming</dt>
-                            <dd>Experienced in coding using java and python</dd></li>
-                            <li><dt>English as a Second Language</dt>
-                            <dd>Experienced in speaking with the english languange since elementary school</dd></li>
-                        </div>
-                        <h2>Soft Skill</h2>
-                        <div class="data">
-                            <li><dt>Planning</dt>
-                            <dd>Vice ceo that helps with planning logistic, revenue, and cost under the saudade company</dd></li>
-                            <li><dt>Public Speaking</dt>
-                            <dd>Often presentase with large audience as MC during High School</dd></li>
-                        </div>
-                    </div>
-                </dl>
-            </div>
-        </section>
-        <h1 class="title-section">Experience & Project</h1>
-        <section class="featured">
-            <div>
-                <dl>
-                    <div>
-                        <div class="data">
-                            <li><dt>ROHIS SMA Labschool Jakarta (2023-2024)</dt>
-                                <dd>Develop muslim faith in SMA Labschool Jakarta</dd></li>
-                            <li><dt>Saudade (2024-2025)</dt>
-                                <img class="logo" src="\static\img\Saudade.jpg" alt="Logo of Saudade">
-                                <dd>Short lived apparel company focusing on making melancoly themed apparel</dd></li>
-                            <li><dt>Dasar - Dasar Pemrograman 0 (2026)</dt>
-                                <img class="logo" src="\static\img\DDP0.jpg" alt="Logo of Dasar-Dasar Pemrograman 0">
-                                <dd>Teach new students the basic of coding and python to prepare on CS courses</dd></li>
-                            <li><dt>Penerimaan Mahasiswa Baru Fasilkom UI (2026-2027)</dt>
-                                <img class="logo" src="\static\img\PMB.png" alt="Logo of Penerimaan Mahasiswa Baru">
-                                <dd>Mentor in student orientation to prepare new student in the CS lifestyle</dd></li>
-                        </div>
-                    </div>
-                </dl>
-            </div>
-        </section>
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Muhammad Naufal Syarifuddin. Faculty of Computer Science, Universitas Indonesia.</p>
+            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
 </body>
