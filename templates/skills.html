@@ -38,13 +38,6 @@
                             <p class="experience-description">
                                 {{ skill.description }}
                             </p>
-                            <img class="logo" src = "{{skill.thumbnail}}" alt = "{{skill.title}} thumbnail">
-
-                            {% if skill.is_ongoing %}
-                                <p class="experience-status">Sedang berlangsung</p>
-                            {% else %}
-                                <p class="experience-status">Selesai</p>
-                            {% endif %}
                         </article>
                     {% empty %}
                         <p class="empty-state">
