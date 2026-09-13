@@ -26,10 +26,10 @@ class Experience(models.Model):
         return self.ended_at is None
 
 class Education(models.Model):
-    Education_CHOICES = [
+    EDUCATION_CHOICE = [
         ('primary', 'Primary'),
         ('secondary', 'Secondary'),
-        ('tertriary', 'Tertriary'),
+        ('tertiary', 'Tertiary'),
         ('non-formal', 'Non-Formal'),
     ]
     
@@ -47,7 +47,7 @@ class Education(models.Model):
         return self.ended_at is None
 
 class Skills(models.Model):
-    Education_CHOICES = [
+    SKILLS_CHOICE = [
         ('hard-skills', 'Hard-Skills'),
         ('soft-skills', 'Soft-Skills'),
     ]

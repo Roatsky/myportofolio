@@ -21,10 +21,6 @@ body {
     line-height: 1.6;
 }
 
-h1 .brand {
-    font-family: "Space Grotesk", -apple-system, sans-serif;
-}
-
 .container {
     max-width: 960px;
     margin: auto;
@@ -41,16 +37,13 @@ h1 .brand {
     padding: 1.25rem 1.5rem;
 }
 
-.brand {
+.site-header nav {
+    display: flex;
+    gap: 2rem;
     font-size: 1.3rem;
     font-weight: 700;
     color: var(--ink);
     text-decoration: none;
-}
-
-.site-header nav {
-    display: flex;
-    gap: 2rem;
 }
 
 .colour{
