@@ -14,14 +14,14 @@ class MainTest(TestCase):
             thumbnail="\\static\\img\\PBP.png"
         )
         self.education = Education.objects.create(
-            title="Fasilkomm UI",
+            title="Fasilkom UI",
             category="tertiary",
             thumbnail="\\static\\img\\CSUI.png"
         )
         self.skill = Skills.objects.create(
             title="Koding",
             description="Berpengalam dalam koding di java dan python.",
-            category="hard-skill",
+            category="hard-skills",
         )
 
     def test_main_url_is_accessible(self):
@@ -46,14 +46,14 @@ class MainTest(TestCase):
 
     def test_education_model(self):
         self.assertEqual(str(self.education), "Fasilkom UI")
-        self.assertEqual(self.education.category, "tertriary")
+        self.assertEqual(self.education.category, "tertiary")
         self.assertEqual(self.education.thumbnail, "\\static\\img\\CSUI.png")
         self.assertTrue(self.education.is_ongoing)
 
     def test_skills_model(self):
         self.assertEqual(str(self.skill), "Koding")
         self.assertEqual(self.skill.description, "Berpengalam dalam koding di java dan python.")
-        self.assertEqual(self.skill.category, "part-time")
+        self.assertEqual(self.skill.category, "hard-skills")
 
     def test_experience_page(self):
         response = self.client.get(reverse("main:show_experience"))
@@ -72,7 +72,7 @@ class MainTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "education.html")
         self.assertContains(response, self.education.title)
-        self.assertContains(response, "Tertriary")
+        self.assertContains(response, "Tertiary")
         self.assertContains(response, "Sedang berlangsung")
         self.assertContains(response, f'href="{reverse("main:show_main")}"')
 
@@ -93,13 +93,13 @@ class MainTest(TestCase):
         self.assertContains(response, "Belum ada pengalaman yang ditambahkan.")
 
     def test_empty_education_page(self):
-        Experience.objects.all().delete()
+        Education.objects.all().delete()
         response = self.client.get(reverse("main:show_education"))
 
         self.assertContains(response, "Belum ada pendidikan yang ditambahkan.")
 
     def test_empty_skills_page(self):
-        Experience.objects.all().delete()
+        Skills.objects.all().delete()
         response = self.client.get(reverse("main:show_skills"))
 
         self.assertContains(response, "Belum ada keterampilan yang ditambahkan.")
@@ -116,7 +116,7 @@ class MainTest(TestCase):
     def test_completed_education(self):
         self.education.ended_at = timezone.now()
         self.education.save()
-        response = self.client.get(reverse("main:show_experience"))
+        response = self.client.get(reverse("main:show_education"))
 
         self.assertFalse(self.education.is_ongoing)
         self.assertContains(response, "Selesai")
