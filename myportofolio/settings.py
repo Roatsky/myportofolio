@@ -73,6 +73,8 @@ TEMPLATES = [
     },
 ]
 
+CSRF_TRUSTED_ORIGINS = ["https://muhammad-naufal523-portofolio.pws.cs.ui.ac.id"]
+
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
