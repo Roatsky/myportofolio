@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block meta %}
+    <title>Experience - {{ name }}</title>
+{% endblock meta %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,22 +15,10 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body class="colour">
-    <header class="site-header">
-        <div class="container">
-            <nav>
-                <a href="{% url 'main:show_main' %}">Profile</a>
-                <a href="{% url 'main:show_experience' %}">Experience</a>
-                <a href="{% url 'main:show_project' %}">Projects</a>
-                <a href="{% url 'main:show_education' %}">Education</a>
-                <a href="{% url 'main:show_skills' %}">Skills</a>
-            </nav>
-        </div>
-    </header>
-
     <main>
         <section class="experience-section" id="education">
             <div class="container">
-                <p class="section-kicker">Perjalanan saya sejauh ini</p>
+                <p class="section-kicker">Keterampilan saya sejauh ini</p>
                 <h1>Education</h1>
 
                 <div class="education-grid">
@@ -50,12 +43,7 @@
                 </div>
             </div>
         </section>
-        </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
-        </div>
-    </footer>
+    </main>
 </body>
 </html>
+{% endblock content %}
