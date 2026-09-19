@@ -93,3 +93,83 @@ class ExperienceForm(ModelForm):
                 }
             ),
         }
+
+class EducationForm(ModelForm):
+    class Meta:
+        model = Education
+        fields = [
+            "title",
+            "category",
+            "thumbnail",
+        ]
+
+        labels = {
+            "title": "Nama Pendidikan",
+            "category": "Kategori Pendidikan",
+            "thumbnail": "URL Gambar Pendidikan",
+        }
+
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "Portfolio Website",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Ceritakan Pendidikanmu",
+                    "rows": 3,
+                }
+            ),
+            "tech_stack": TextInput(
+                attrs={
+                    "placeholder": "primary",
+                }
+            ),
+            "thumbnail": URLInput(
+                attrs={
+                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
+            ),
+        }
+
+class SkillsForm(ModelForm):
+    class Meta:
+        model = Skills
+        fields = [
+            "title",
+            "description",
+            "category",
+        ]
+
+        labels = {
+            "title": "Nama Keterampilan",
+            "description": "Deskripsi Keterampilan",
+            "category": "Kategori Keterampilan",
+        }
+
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "Portfolio Website",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Ceritakan Keterampilanmu",
+                    "rows": 3,
+                }
+            ),
+            "tech_stack": TextInput(
+                attrs={
+                    "placeholder": "soft-skills",
+                }
+            ),
+            "thumbnail": URLInput(
+                attrs={
+                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
+            ),
+        }

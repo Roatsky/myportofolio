@@ -18,27 +18,56 @@
     <main>
         <section class="experience-section" id="education">
             <div class="container">
-                <p class="section-kicker">Keterampilan saya sejauh ini</p>
-                <h1>Education</h1>
+                <p class="section-kicker">Pendidikan saya sejauh ini</p>
+                <div class="project-header">
+                    <h1>Education</h1>
+                    <a href="{% url 'main:create_education' %}"
+                       class="button project-add-button">
+                        <span aria-hidden="true">+</span>
+                        Tambah Pendidikan
+                    </a>
+                </div>
+                <form method="get"
+                      action="{% url 'main:show_education' %}"
+                      class="project-search">
+                    <input type="search"
+                           name="title"
+                           value="{{ title_query }}"
+                           placeholder="Cari berdasarkan nama pendidikan"
+                           class="project-search__input"
+                           aria-label="Cari berdasarkan nama pendidikan">
+                    <button type="submit" class="button">Cari</button>
+                </form>
 
                 <div class="education-grid">
                     {% for education in education_list %}
                         <article class="experience-card">
+                            {% if project.project_image_url %}
+                                <img src="{{ education.thumbnail }}"
+                                     alt="Gambar {{ education.title }}"
+                                     class="project-image">
+                            {% endif %}
                             <span class="experience-category">
                                 {{ education.get_category_display }}
                             </span>
                             <h2>{{ education.title }}</h2>
-                            <img class="logo" src = "{{education.thumbnail}}" alt = "{{education.title}} thumbnail">
                             {% if education.is_ongoing %}
                                 <p class="experience-status">Sedang berlangsung</p>
                             {% else %}
                                 <p class="experience-status">Selesai</p>
                             {% endif %}
+                            <div class="project-card-actions">
+                                <div class="project-actions">
+                                    {% include "components/education_delete_modal.html" with education=education %}
+                                </div>
+                            </div>
                         </article>
                     {% empty %}
-                        <p class="empty-state">
-                            Belum ada pendidikan yang ditambahkan.
-                        </p>
+                        {% if title_query %}
+                            <p class="empty-state">Tidak ada pendidikan dengan nama tersebut.</p>
+                        {% else %}
+                            <p class="empty-state">Belum ada pendidikan yang ditambahkan..</p>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
