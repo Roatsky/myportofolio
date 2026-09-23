@@ -21,11 +21,13 @@
                 <p class="section-kicker">Keterampilan saya sejauh ini</p>
                 <div class="project-header">
                     <h1>Skills</h1>
-                    <a href="{% url 'main:create_skills' %}"
-                       class="button project-add-button">
-                        <span aria-hidden="true">+</span>
-                        Tambah Keterampilan
-                    </a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'main:create_skills' %}"
+                        class="button project-add-button">
+                            <span aria-hidden="true">+</span>
+                            Tambah Keterampilan
+                        </a>
+                    {% endif %}
                 </div>
                 <form method="get"
                       action="{% url 'main:show_skills' %}"
@@ -50,9 +52,12 @@
                                 {{ skill.description }}
                             </p>
                             <div class="project-card-actions">
-                                <div class="project-actions">
-                                    {% include "components/skills_delete_modal.html" with skill=skill %}
-                                </div>
+                                {% include "components/skills_star.html" with skill=skill %}
+                                {% if user.is_superuser %}
+                                    <div class="project-actions">
+                                        {% include "components/skills_delete_modal.html" with skill=skill %}
+                                    </div>
+                                    {% endif %}
                             </div>
                         </article>
                     {% empty %}
