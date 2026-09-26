@@ -1,6 +1,6 @@
 from django.urls import path
 
-from main.views import show_main, show_experience, show_education, show_skills, create_project, show_project, get_projects_json, delete_project, get_experience_json, delete_experience, create_experience, get_education_json, delete_education, create_education, get_skills_json, delete_skills, create_skills, register, login_user, logout_user, project_star, education_star, skills_star, experience_star
+from main.views import show_main, show_experience, show_education, show_skills, create_project, show_project, get_projects_json, delete_project, get_experience_json, delete_experience, create_experience, get_education_json, delete_education, create_education, get_skills_json, delete_skills, create_skills, register, login_user, logout_user, project_star, education_star, skills_star, experience_star, edit_project, edit_experience, edit_education, edit_skills
 
 app_name = "main"
 
@@ -29,4 +29,8 @@ urlpatterns = [
     path("experience/<uuid:experience_id>/star/", experience_star,name="experience_star",),
     path("education/<uuid:education_id>/star/", education_star,name="education_star",),
     path("skills/<uuid:skills_id>/star/", skills_star,name="skills_star",),
+    path("projects/<uuid:project_id>/star/", edit_project,name="edit_project",),
+    path("experience/<uuid:experience_id>/edit/", edit_experience,name="edit_experience",),
+    path("education/<uuid:education_id>/edit/", edit_education,name="edit_education",),
+    path("skills/<uuid:skills_id>/edit/", edit_skills,name="edit_skills",),
 ]

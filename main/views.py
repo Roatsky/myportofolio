@@ -329,3 +329,79 @@ def skills_star(request, skills_id):
             skill.starred_by.add(request.user)
 
     return redirect("main:show_skills")
+
+@login_required(login_url="/login/")
+def edit_experience(request, experience_id):
+    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+        raise PermissionDenied
+    experience = get_object_or_404(Experience, pk=experience_id)
+    form = ExperienceForm(request.POST or None, instance=experience)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Pengalaman berhasil diperbaharui!")
+        return redirect("main:show_experience")
+
+    context = {
+        "name": "Muhammad Naufal Syarifuddin",
+        "form": form,
+        "experience": experience,
+    }
+    return render(request, "experience_form.html", context)
+
+@login_required(login_url="/login/")
+def edit_project(request, project_id):
+    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+        raise PermissionDenied
+    project = get_object_or_404(Project, pk=project_id)
+    form = ProjectForm(request.POST or None, instance=project)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Proyek berhasil diperbaharui!")
+        return redirect("main:show_experience")
+
+    context = {
+        "name": "Muhammad Naufal Syarifuddin",
+        "form": form,
+        "project": project,
+    }
+    return render(request, "projects_form.html", context)
+
+@login_required(login_url="/login/")
+def edit_education(request, education_id):
+    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+        raise PermissionDenied
+    education = get_object_or_404(Education, pk=education_id)
+    form = EducationForm(request.POST or None, instance=education)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Pendidikan berhasil diperbaharui!")
+        return redirect("main:show_education")
+
+    context = {
+        "name": "Muhammad Naufal Syarifuddin",
+        "form": form,
+        "experience": education,
+    }
+    return render(request, "education_form.html", context)
+
+@login_required(login_url="/login/")
+def edit_skills(request, skills_id):
+    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+        raise PermissionDenied
+    skills = get_object_or_404(Skills, pk=skills_id)
+    form = SkillsForm(request.POST or None, instance=skills)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Keterampilan berhasil diperbaharui!")
+        return redirect("main:show_skills")
+
+    context = {
+        "name": "Muhammad Naufal Syarifuddin",
+        "form": form,
+        "skills": skills,
+    }
+    return render(request, "skills_form.html", context)
