@@ -292,7 +292,7 @@ def project_star(request, project_id):
         else:
             project.starred_by.add(request.user)
 
-    return redirect("main:show_projects")
+    return redirect("main:show_project")
 
 @login_required(login_url="/login/")
 def experience_star(request, experience_id):
@@ -332,7 +332,7 @@ def skills_star(request, skills_id):
 
 @login_required(login_url="/login/")
 def edit_experience(request, experience_id):
-    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
         raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)
@@ -351,7 +351,7 @@ def edit_experience(request, experience_id):
 
 @login_required(login_url="/login/")
 def edit_project(request, project_id):
-    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
         raise PermissionDenied
     project = get_object_or_404(Project, pk=project_id)
     form = ProjectForm(request.POST or None, instance=project)
@@ -359,7 +359,7 @@ def edit_project(request, project_id):
     if request.method == "POST" and form.is_valid():
         form.save()
         messages.success(request, "Proyek berhasil diperbaharui!")
-        return redirect("main:show_experience")
+        return redirect("main:show_project")
 
     context = {
         "name": "Muhammad Naufal Syarifuddin",
@@ -370,7 +370,7 @@ def edit_project(request, project_id):
 
 @login_required(login_url="/login/")
 def edit_education(request, education_id):
-    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
         raise PermissionDenied
     education = get_object_or_404(Education, pk=education_id)
     form = EducationForm(request.POST or None, instance=education)
@@ -383,13 +383,13 @@ def edit_education(request, education_id):
     context = {
         "name": "Muhammad Naufal Syarifuddin",
         "form": form,
-        "experience": education,
+        "education": education,
     }
     return render(request, "education_form.html", context)
 
 @login_required(login_url="/login/")
 def edit_skills(request, skills_id):
-    if not request.user.is_superuser or request.user.filter(name='Editor').exists():
+    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
         raise PermissionDenied
     skills = get_object_or_404(Skills, pk=skills_id)
     form = SkillsForm(request.POST or None, instance=skills)
