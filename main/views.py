@@ -242,9 +242,9 @@ def get_skills_json(request):
     skills = Skills.objects.all()
 
     if title_query:
-        skills = skills.filter(title__icontains=title_query, use_natural_foreign_keys=True)
+        skills = skills.filter(title__icontains=title_query)
 
-    skills_json = serializers.serialize("json", skills)
+    skills_json = serializers.serialize("json", skills, use_natural_foreign_keys=True)
     return HttpResponse(skills_json, content_type="application/json")
 
 def register(request):
@@ -332,7 +332,7 @@ def skills_star(request, skills_id):
 
 @login_required(login_url="/login/")
 def edit_experience(request, experience_id):
-    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
+    if not (request.user.is_superuser or request.user.groups.filter(name='Editor').exists()):
         raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)
@@ -351,7 +351,7 @@ def edit_experience(request, experience_id):
 
 @login_required(login_url="/login/")
 def edit_project(request, project_id):
-    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
+    if not (request.user.is_superuser or request.user.groups.filter(name='Editor').exists()):
         raise PermissionDenied
     project = get_object_or_404(Project, pk=project_id)
     form = ProjectForm(request.POST or None, instance=project)
@@ -370,7 +370,7 @@ def edit_project(request, project_id):
 
 @login_required(login_url="/login/")
 def edit_education(request, education_id):
-    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
+    if not (request.user.is_superuser or request.user.groups.filter(name='Editor').exists()):
         raise PermissionDenied
     education = get_object_or_404(Education, pk=education_id)
     form = EducationForm(request.POST or None, instance=education)
@@ -389,7 +389,7 @@ def edit_education(request, education_id):
 
 @login_required(login_url="/login/")
 def edit_skills(request, skills_id):
-    if not request.user.is_superuser or request.user.groups.filter(name='Editor').exists():
+    if not (request.user.is_superuser or request.user.groups.filter(name='Editor').exists()):
         raise PermissionDenied
     skills = get_object_or_404(Skills, pk=skills_id)
     form = SkillsForm(request.POST or None, instance=skills)
