@@ -29,10 +29,9 @@
                         </a>
                     {% endif %}
                 </div>
-                <form method="get"
-                      action="{% url 'main:show_experience' %}"
-                      class="project-search">
+                <form id="project-search-form" class="project-search">
                     <input type="search"
+                           id="search-input"
                            name="title"
                            value="{{ title_query }}"
                            placeholder="Cari berdasarkan nama pengalaman"
@@ -40,6 +39,19 @@
                            aria-label="Cari berdasarkan nama pengalaman">
                     <button type="submit" class="button">Cari</button>
                 </form>
+
+                <div id="loading" class="empty-state hide">
+                    <p>Memuat experience...</p>
+                </div>
+
+                <div id="error" class="empty-state hide">
+                    <p>Gagal memuat data experience. Silakan coba lagi.</p>
+                </div>
+
+                 <div id="empty" class="empty-state hide">
+                    <p>Belum ada pengalaman yang ditambahkan atau ditemukan.</p>
+                </div>
+                <div id="grid" class="experience-grid project-grid hide"></div>
 
                 <div class="experience-grid">
                     {% for experience in experience_list %}
