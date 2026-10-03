@@ -44,7 +44,7 @@ def show_education(request):
     context = {
         "name": "Muhammad Naufal Syarifuddin",
         "title_query": title_query,
-        "form": ProjectForm(),
+        "form": EducationForm(),
     }
     return render(request, "education.html", context)
 
@@ -153,17 +153,17 @@ def get_experience_json(request):
 
     data = []
     for ex in experience:
-        starred_users = experience.starred_by.all()
+        starred_users = ex.starred_by.all()
         is_starred = request.user in starred_users if request.user.is_authenticated else False
         starred_by_names = ", ".join([u.username for u in starred_users])
 
         data.append({
-            "pk": str(experience.id),
+            "pk": str(ex.id),
             "fields": {
-                "title": experience.title,
-                "description": experience.description,
-                "category": experience.category,
-                "thumbnail": experience.thumbnail,
+                "title": ex.title,
+                "description": ex.description,
+                "category": ex.category,
+                "thumbnail": ex.thumbnail,
                 "star_count": starred_users.count(),
                 "is_starred": is_starred,
                 "starred_by_names": starred_by_names,
@@ -254,16 +254,16 @@ def get_education_json(request):
 
     data = []
     for ed in education:
-        starred_users = education.starred_by.all()
+        starred_users = ed.starred_by.all()
         is_starred = request.user in starred_users if request.user.is_authenticated else False
         starred_by_names = ", ".join([u.username for u in starred_users])
 
         data.append({
-            "pk": str(education.id),
+            "pk": str(ed.id),
             "fields": {
-                "title": education.title,
-                "category": education.category,
-                "thumbnail": education.thumbnail,
+                "title": ed.title,
+                "category": ed.category,
+                "thumbnail": ed.thumbnail,
                 "star_count": starred_users.count(),
                 "is_starred": is_starred,
                 "starred_by_names": starred_by_names,
@@ -281,16 +281,16 @@ def get_skills_json(request):
 
     data = []
     for sk in skills:
-        starred_users = skills.starred_by.all()
+        starred_users = sk.starred_by.all()
         is_starred = request.user in starred_users if request.user.is_authenticated else False
         starred_by_names = ", ".join([u.username for u in starred_users])
 
         data.append({
-            "pk": str(skills.id),
+            "pk": str(sk.id),
             "fields": {
-                "title": skills.title,
-                "description": skills.description,
-                "category": skills.category,
+                "title": sk.title,
+                "description": sk.description,
+                "category": sk.category,
                 "star_count": starred_users.count(),
                 "is_starred": is_starred,
                 "starred_by_names": starred_by_names,

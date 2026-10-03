@@ -52,35 +52,6 @@
                 </div>
 
                 <div id="grid" class="experience-grid project-grid hide"></div>
-
-                <div class="experience-grid project-grid">
-                    {% for project in project_list %}
-                        <article class="experience-card">
-                            {% if project.project_image_url %}
-                                <img src="{{ project.project_image_url }}"
-                                     alt="Gambar {{ project.title }}"
-                                     class="project-image">
-                            {% endif %}
-                            <h2>{{ project.title }}</h2>
-                            <span class="experience-category">{{ project.tech_stack }}</span>
-                            <p class="experience-description">{{ project.description }}</p>
-                            <div class="project-card-actions">
-                                    {% if project.project_url %}
-                                        <a href="{{ project.project_url }}" class="button">Lihat Project</a>
-                                    {% endif %}
-                                    {% include "components/project_star.html" with project=project %}
-                                    {% if perms.main.change_project %}
-                                        <div class="project-actions">
-                                            <a href="{% url 'main:edit_project' project.id %}" class="button button-warning">Edit</a>
-                                            {% if user.is_superuser %}
-                                                {% include "components/project_delete_modal.html" with project=project %}
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
             </div>
         </section>
     </main>
