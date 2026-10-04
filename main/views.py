@@ -488,7 +488,7 @@ def create_experience_ajax(request):
     if form.is_valid():
         experience = form.save()
         return JsonResponse(
-            {"message": "Proyek berhasil ditambahkan.", "pk": str(experience.id)},
+            {"message": "Pengalaman berhasil ditambahkan.", "pk": str(experience.id)},
             status=201,
         )
 
@@ -506,7 +506,7 @@ def create_education_ajax(request):
     if form.is_valid():
         education = form.save()
         return JsonResponse(
-            {"message": "Proyek berhasil ditambahkan.", "pk": str(education.id)},
+            {"message": "Pendidikan berhasil ditambahkan.", "pk": str(education.id)},
             status=201,
         )
 
@@ -524,7 +524,7 @@ def create_skills_ajax(request):
     if form.is_valid():
         skills = form.save()
         return JsonResponse(
-            {"message": "Proyek berhasil ditambahkan.", "pk": str(skills.id)},
+            {"message": "Keterampilan berhasil ditambahkan.", "pk": str(skills.id)},
             status=201,
         )
 

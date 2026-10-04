@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body class="colour">
+<body>
     <main>
         <section class="experience-section" id="education">
             <div class="container">
@@ -116,7 +116,7 @@
         const deleteHtml = IS_SUPERUSER 
             ? `<form method="post" action="${deleteUrl}" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" class="button button-danger" onclick="return confirm('Yakin ingin menghapus project ini?');">Hapus</button>
+                <button type="submit" class="button button-danger" onclick="return confirm('Yakin ingin menghapus pendidikan ini?');">Hapus</button>
             </form>`
             : '';
 
@@ -211,7 +211,7 @@
         document.getElementById("add-education-modal").hidePopover();
     }   
 
-        const CREATE_PROJECT_ENDPOINT = "{% url 'main:create_education_ajax' %}";
+    const CREATE_EDUCATION_ENDPOINT = "{% url 'main:create_education_ajax' %}";
     const educationForm = document.getElementById('education-form');
 
     // Membaca nilai cookie, digunakan untuk mengambil token CSRF
@@ -238,7 +238,7 @@
         submitButton.disabled = true;
 
         try {
-            const response = await fetch(CREATE_PROJECT_ENDPOINT, {
+            const response = await fetch(CREATE_EDUCATION_ENDPOINT, {
                 method: 'POST',
                 headers: { 'X-CSRFToken': getCookie('csrftoken') },
                 body: new FormData(educationForm),

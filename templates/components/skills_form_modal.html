@@ -1,4 +1,4 @@
-<div id="add-project-modal"
+<div id="add-skills-modal"
      class="project-form-modal"
      popover="auto"
      role="dialog"
@@ -6,22 +6,22 @@
      aria-labelledby="add-skills-modal-title">
     <button type="button"
             class="project-form-modal__backdrop"
-            popovertarget="add-project-modal"
+            popovertarget="add-skills-modal"
             popovertargetaction="hide"
-            aria-label="Tutup form tambah pengalaman"></button>
+            aria-label="Tutup form tambah keterampilan"></button>
 
     <div class="project-form-modal__content">
         <button type="button"
                 class="project-form-modal__close"
-                popovertarget="add-project-modal"
+                popovertarget="add-skills-modal"
                 popovertargetaction="hide"
                 aria-label="Tutup form tambah keterampilan">×</button>
 
-        <h2 id="add-project-modal-title">Tambah Keterampilan Baru</h2>
-        <form id="project-form"
+        <h2 id="add-skills-modal-title">Tambah Keterampilan Baru</h2>
+        <form id="skills-form"
               method="post"
               action="{% url 'main:create_skills' %}"
-              class="project-form">
+              class="skills-form">
             {% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
@@ -35,7 +35,7 @@
             <div class="project-form-modal__actions">
                 <button type="button"
                         class="button button-secondary"
-                        popovertarget="add-project-modal"
+                        popovertarget="add-skills-modal"
                         popovertargetaction="hide">Batal</button>
                 <button type="submit" class="button">Tambah Keterampilan</button>
             </div>

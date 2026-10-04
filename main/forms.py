@@ -94,11 +94,6 @@ class ExperienceForm(ModelForm):
                     "rows": 3,
                 }
             ),
-            "tech_stack": TextInput(
-                attrs={
-                    "placeholder": "part-time",
-                }
-            ),
             "thumbnail": URLInput(
                 attrs={
                     "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
@@ -108,11 +103,8 @@ class ExperienceForm(ModelForm):
     def clean_title(self):
         title = strip_tags(self.cleaned_data["title"]).strip()
         if not title:
-            raise ValidationError("Nama proyek tidak boleh hanya berisi tag HTML.")
+            raise ValidationError("Nama pengalaman tidak boleh hanya berisi tag HTML.")
         return title
-
-    def clean_tech_stack(self):
-        return strip_tags(self.cleaned_data["tech_stack"]).strip()
 
     def clean_description(self):
         return strip_tags(self.cleaned_data["description"]).strip()
@@ -139,17 +131,6 @@ class EducationForm(ModelForm):
                     "maxlength": 255,
                 }
             ),
-            "description": Textarea(
-                attrs={
-                    "placeholder": "Ceritakan Pendidikanmu",
-                    "rows": 3,
-                }
-            ),
-            "tech_stack": TextInput(
-                attrs={
-                    "placeholder": "primary",
-                }
-            ),
             "thumbnail": URLInput(
                 attrs={
                     "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
@@ -159,14 +140,8 @@ class EducationForm(ModelForm):
     def clean_title(self):
         title = strip_tags(self.cleaned_data["title"]).strip()
         if not title:
-            raise ValidationError("Nama proyek tidak boleh hanya berisi tag HTML.")
+            raise ValidationError("Nama pendidikan tidak boleh hanya berisi tag HTML.")
         return title
-
-    def clean_tech_stack(self):
-        return strip_tags(self.cleaned_data["tech_stack"]).strip()
-
-    def clean_description(self):
-        return strip_tags(self.cleaned_data["description"]).strip()
 
 class SkillsForm(ModelForm):
     class Meta:
@@ -196,25 +171,12 @@ class SkillsForm(ModelForm):
                     "rows": 3,
                 }
             ),
-            "tech_stack": TextInput(
-                attrs={
-                    "placeholder": "soft-skills",
-                }
-            ),
-            "thumbnail": URLInput(
-                attrs={
-                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
-                }
-            ),
         }
     def clean_title(self):
         title = strip_tags(self.cleaned_data["title"]).strip()
         if not title:
             raise ValidationError("Nama proyek tidak boleh hanya berisi tag HTML.")
         return title
-
-    def clean_tech_stack(self):
-        return strip_tags(self.cleaned_data["tech_stack"]).strip()
 
     def clean_description(self):
         return strip_tags(self.cleaned_data["description"]).strip()
