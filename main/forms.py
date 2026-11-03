@@ -1,7 +1,7 @@
 from django.forms import ModelForm, TextInput, Textarea, URLInput
 from django.core.exceptions import ValidationError
 from django.utils.html import strip_tags
-from main.models import Project, Experience, Education, Skills
+from .models import Project, Experience, Education, Skills
 
 
 class ProjectForm(ModelForm):

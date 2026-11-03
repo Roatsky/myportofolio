@@ -10,8 +10,8 @@ import datetime
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
-from main.models import Experience, Education, Skills, Project
-from main.forms import ProjectForm, ExperienceForm, EducationForm, SkillsForm
+from .models import Experience, Education, Skills, Project
+from .forms import ProjectForm, ExperienceForm, EducationForm, SkillsForm
 
 def show_main(request):
     last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
