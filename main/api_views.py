@@ -189,7 +189,7 @@ def skills_star(request, skills_id):
         skills.starred_by.remove(request.user)
     else:
         skills.starred_by.add(request.user)
-    serializer = ProjectSerializer(skills, context={"request": request})
+    serializer = SkillsSerializer(skills, context={"request": request})
     return Response(serializer.data)
 
 @api_view(["POST"])
@@ -201,7 +201,7 @@ def experience_star(request, experience_id):
         experience.starred_by.remove(request.user)
     else:
         experience.starred_by.add(request.user)
-    serializer = ProjectSerializer(experience, context={"request": request})
+    serializer = ExperienceSerializer(experience, context={"request": request})
     return Response(serializer.data)
 
 @api_view(["POST"])
@@ -213,7 +213,7 @@ def education_star(request, education_id):
         education.starred_by.remove(request.user)
     else:
         education.starred_by.add(request.user)
-    serializer = ProjectSerializer(education, context={"request": request})
+    serializer = EducationSerializer(education, context={"request": request})
     return Response(serializer.data)
 
 @api_view(["POST"])

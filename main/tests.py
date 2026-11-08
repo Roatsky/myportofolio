@@ -9,7 +9,6 @@ from .models import Experience, Education, Skills, Project
 
 class PortfolioTest(TestCase):
     def setUp(self):
-        # Users
         self.superuser = User.objects.create_superuser(
             username="admin_naufal",
             email="admin@example.com",
@@ -21,7 +20,6 @@ class PortfolioTest(TestCase):
             password="password123",
         )
 
-        # Initial Model Instances
         self.experience = Experience.objects.create(
             title="Asisten Dosen PBP",
             description="Membantu mahasiswa memahami pengembangan web.",
@@ -46,9 +44,6 @@ class PortfolioTest(TestCase):
             project_image_url="https://example.com/tanampedia.png",
         )
 
-    # ==========================================
-    # 1. MODEL TESTS
-    # ==========================================
     def test_experience_model(self):
         self.assertEqual(str(self.experience), "Asisten Dosen PBP")
         self.assertEqual(self.experience.category, "part-time")
@@ -75,9 +70,6 @@ class PortfolioTest(TestCase):
         self.assertEqual(str(self.project), "Tanampedia")
         self.assertEqual(self.project.tech_stack, "Django, Python, JavaScript")
 
-    # ==========================================
-    # 2. PAGE SHELL & TEMPLATE TESTS
-    # ==========================================
     def test_main_url_is_accessible(self):
         response = self.client.get(reverse("main:show_main"))
         self.assertEqual(response.status_code, 200)
@@ -107,9 +99,6 @@ class PortfolioTest(TestCase):
         self.assertTemplateUsed(response, "skills.html")
         self.assertContains(response, "Belum ada keterampilan yang ditambahkan atau ditemukan.")
 
-    # ==========================================
-    # 3. JSON API ENDPOINT TESTS
-    # ==========================================
     def test_get_projects_json(self):
         response = self.client.get(reverse("main:get_projects_json"))
         self.assertEqual(response.status_code, 200)
@@ -147,9 +136,6 @@ class PortfolioTest(TestCase):
         data_empty = json.loads(response_empty.content)
         self.assertEqual(len(data_empty), 0)
 
-    # ==========================================
-    # 4. AJAX CREATION & VALIDATION TESTS
-    # ==========================================
     def test_create_project_ajax_forbidden_for_non_superuser(self):
         self.client.login(username="visitor", password="password123")
         response = self.client.post(
@@ -231,9 +217,6 @@ class PortfolioTest(TestCase):
         data = json.loads(response.content)
         self.assertIn("title", data["errors"])
 
-    # ==========================================
-    # 5. STARRING & DELETION TESTS
-    # ==========================================
     def test_star_and_unstar_project(self):
         self.client.login(username="visitor", password="password123")
         star_url = reverse("main:project_star", args=[self.project.id])
