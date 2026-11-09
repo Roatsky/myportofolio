@@ -75,9 +75,10 @@
     const gridContainer = document.getElementById('grid');
     const searchForm = document.getElementById('project-search-form');
     const searchInput = document.getElementById('search-input');
-    const experiencetForm = document.getElementById('education-form');
+    const educationForm = document.getElementById('education-form');
     const SEARCH_DEBOUNCE_DELAY = 300;
     let searchDebounceTimer;
+    let projectsAbortController;
 
     function getCookie(name) {
         const prefix = `${name}=`;
@@ -109,7 +110,7 @@
     }
 
     // Membuat elemen card project
-    function buildProjectCardElement(item) {
+    function buildProjectCardElement(education) {
         const article = document.createElement('article');
         article.className = 'education-card';
 
@@ -117,17 +118,11 @@
         ? `<img src="${escapeHtml(education.thumbnail)}" alt="Thumbnail ${escapeHtml(education.title)}" class="project-image">`
         : '';
         
-        // Dummy UUID digunakan untuk digantikan oleh ID asli dari data JSON
-        const deleteUrl = "{% url 'main:delete_education' '00000000-0000-0000-0000-000000000000' %}"
-            .replace('00000000-0000-0000-0000-000000000000', educationID);
-        const starUrl = "{% url 'main:education_star' '00000000-0000-0000-0000-000000000000' %}"
-            .replace('00000000-0000-0000-0000-000000000000', educationID);
-
         const star = IS_AUTHENTICATED
             ? `<button type="button" class="button button-star${education.is_starred ? ' is-starred' : ''}"
                 data-action="star" data-id="${escapeHtml(education.id)}"
                 title="${escapeHtml(education.starred_by_names)}">
-                ${project.is_starred ? 'Unstar' : 'Star'} (${education.star_count})</button>`
+                ${education.is_starred ? 'Unstar' : 'Star'} (${education.star_count})</button>`
             : `<a href="{% url 'main:login' %}" class="button">Login to star (${experience.star_count})</a>`;
         const remove = IS_SUPERUSER
             ? `<button type="button" class="button button-danger" data-action="delete"
@@ -135,7 +130,7 @@
         article.innerHTML = `${imageHtml}<h2>${escapeHtml(education.title)}</h2>
             <span class="experience-category">${escapeHtml(education.category)}</span>
             <div class="project-card-actions"><div class="project-actions">
-            ${link}${star}${remove}</div></div>`;
+            ${star}${remove}</div></div>`;
         return article;
     }
 
@@ -157,13 +152,34 @@
 
             const projectData = await response.json();
 
-            gridContainer.replaceChildren(...education.map(buildProjectCardElement));
-            displayPageSection({ showGrid: education.length > 0, showEmpty: education.length === 0 });
+            gridContainer.replaceChildren(...projectData.map(buildProjectCardElement));
+            displayPageSection({ showGrid: projectData.length > 0, showEmpty: projectData.length === 0 });
         } catch (error) {
             if (error.name === 'AbortError') return;
             console.error(error);
             displayPageSection({ showError: true });
         }
+    }
+
+    function apiErrorMessage(data, status) {
+        const messages = Object.values(data).flat().filter(value => typeof value === 'string');
+        return messages.join(' ') || `Request failed (HTTP ${status}).`;
+    }
+
+    async function writeProject(url, method, payload) {
+        const response = await fetch(url, {
+            method,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: payload === undefined ? undefined : JSON.stringify(payload),
+        });
+        if (response.status === 204) return null;
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(apiErrorMessage(data, response.status));
+        return data;
     }
 
     // Mengirim data form ke server
@@ -179,7 +195,7 @@
                 'title', 'thumbnail', 'category',
             ].map(name => [name, fields.get(name)]));
             await writeProject(BASE_PROJECTS_ENDPOINT, 'POST', payload);
-            projectForm.reset();
+            experienceForm.reset();
             document.getElementById('add-education-modal').hidePopover();
             showToast('Success', 'Education created.', 'success');
             await fetchProjects(searchInput.value.trim());

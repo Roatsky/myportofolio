@@ -74,8 +74,10 @@
     const gridContainer = document.getElementById('grid');
     const searchForm = document.getElementById('project-search-form');
     const searchInput = document.getElementById('search-input');
+    const skillsForm = document.getElementById('skills-form');
     const SEARCH_DEBOUNCE_DELAY = 300;
     let searchDebounceTimer;
+    let projectsAbortController;
 
     function getCookie(name) {
         const prefix = `${name}=`;
@@ -107,21 +109,15 @@
     }
 
     // Membuat elemen card project
-    function buildProjectCardElement(item) {
+    function buildProjectCardElement(skills) {
         const article = document.createElement('article');
         article.className = 'skills-card';
         
-        // Dummy UUID digunakan untuk digantikan oleh ID asli dari data JSON
-        const deleteUrl = "{% url 'main:delete_skills' '00000000-0000-0000-0000-000000000000' %}"
-            .replace('00000000-0000-0000-0000-000000000000', skillsID);
-        const starUrl = "{% url 'main:skills_star' '00000000-0000-0000-0000-000000000000' %}"
-            .replace('00000000-0000-0000-0000-000000000000', skillsID);
-
         const star = IS_AUTHENTICATED
             ? `<button type="button" class="button button-star${skills.is_starred ? ' is-starred' : ''}"
                 data-action="star" data-id="${escapeHtml(skills.id)}"
                 title="${escapeHtml(skills.starred_by_names)}">
-                ${project.is_starred ? 'Unstar' : 'Star'} (${skills.star_count})</button>`
+                ${skills.is_starred ? 'Unstar' : 'Star'} (${skills.star_count})</button>`
             : `<a href="{% url 'main:login' %}" class="button">Login to star (${skills.star_count})</a>`;
         const remove = IS_SUPERUSER
             ? `<button type="button" class="button button-danger" data-action="delete"
@@ -130,7 +126,7 @@
             <span class="experience-category">${escapeHtml(skills.category)}</span>
             <p class="experience-description">${escapeHtml(skills.description)}</p>
             <div class="project-card-actions"><div class="project-actions">
-            ${link}${star}${remove}</div></div>`;
+            ${star}${remove}</div></div>`;
         return article;
     }
 
@@ -147,17 +143,38 @@
                 signal: projectsAbortController.signal,
             });
 
-            if (!response.ok) throw new Error('Failed to fetch data');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
             const projectData = await response.json();
 
-            gridContainer.replaceChildren(...experience.map(buildProjectCardElement));
-            displayPageSection({ showGrid: skills.length > 0, showEmpty: skills.length === 0 });
+            gridContainer.replaceChildren(...projectData.map(buildProjectCardElement));
+            displayPageSection({ showGrid: projectData.length > 0, showEmpty: projectData.length === 0 });
         } catch (error) {
             if (error.name === 'AbortError') return;
             console.error(error);
             displayPageSection({ showError: true });
         }
+    }
+
+    function apiErrorMessage(data, status) {
+        const messages = Object.values(data).flat().filter(value => typeof value === 'string');
+        return messages.join(' ') || `Request failed (HTTP ${status}).`;
+    }
+
+    async function writeProject(url, method, payload) {
+        const response = await fetch(url, {
+            method,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: payload === undefined ? undefined : JSON.stringify(payload),
+        });
+        if (response.status === 204) return null;
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(apiErrorMessage(data, response.status));
+        return data;
     }
 
     // Mengirim data form ke server
