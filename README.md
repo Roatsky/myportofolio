@@ -9,9 +9,9 @@ Website ini merupakan portofolio pribadi saya yang saya kembangkan sebagai proye
 Dalam tugas 45 ini saya tidak menggunakan AI. Saya membangun website ini dari template awal yang tim asdos PBP berikan dan saya gunakan template itu serta w3school dan stack overflow untuk membangun rest API kedalam website serta implementasi javascript dan viewsnya dalam repository.
 
 Tugas Refleski:
-1. 
+1. REST API adalah sebuah interface yang memungkinkan dua atau lebih sistem komputer saling berkomunikasi dan bertukar data melalui jaringan berbasis web. Mengembalikan JSON hanya memenuhi serialisasi namun belum memenuhi namun belum memenuhi kriteria REST lain seperti stateless, cacheable, uniform, dll. Put bekerja memperbarui secara seluruh (contoh mengisi ulang semua field) vs patch hanya memperbarui sebagian (contoh mengganti 1 field).
 
-2. 
+2. Serializer berguna untuk sebagai validasi data yang terpusat, deserialisasi json mentah menjadi objek yang dapat dibaca, menangani relasi antar modal (manytomany atau foreign key), dan menghasilkan serializer.errors yang konsisten. Dari keuntungan yang sudah disebut, bisa dilihat serializer lebih bagus daripada dictionary manual karena dengan validasi terpusat di serializer; consistency, security, dan maintanance lebih mudah dijaga.
 
 3. Autentikasi adalah proses pembuktian siapa itu user sedangkan otorisasi adal proses penentuan user memiliki kuasa apa. Kedua permission ini wajib diadakan dalam server karena jika menutupi tombol, maka itu hanya menghilangkan UI tanpa mencegah pemberian data. Hacker tetap dapat memasuki data lewat backend agar memanipulasi situs dengan cara yang sengaja dilarang dengan autentikasi dan otorisasi.
 
